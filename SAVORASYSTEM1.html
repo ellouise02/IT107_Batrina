@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savora Restaurant Management System</title>
+
+<style>
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f5f5f5;
+    color: #222;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+h1, h2, h3, h4, h5, h6,
+button, th, strong, b {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+button, input, select {
+    font-size: 14px;
+}
+
+button {
+    cursor: pointer;
+}
+
+input, select {
+    padding: 11px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 6px 0 12px;
+}
+
+.primary {
+    background: #431315;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+}
+
+.primary:hover {
+    background: #431315;
+}
+
+
+
+.auth-page {
+    display: none;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-box {
+    display: flex;
+    width: 850px;
+    max-width: 100%;
+    min-height: 480px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px #0002;
+}
+
+.logo-side {
+    width: 50%;
+    background: #431315;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+}
+
+.logo {
+    width: 85%;
+    max-width: 280px;
+    height: auto;
+    object-fit: contain;
+}
+
+.logo-side p {
+    line-height: 1.6;
+}
+
+.form-side {
+    width: 50%;
+    padding: 40px 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-side h2 {
+    color: #900000;
+    text-align: center;
+
+}
+
+.form-side input,
+.form-side select {
+    width: 100%;
+}
+
+.link {
+    border: none;
+    background: none;
+    color: #900000;
+    text-align: left;
+    padding: 8px 0;
+}
+
+
+
+#app {
+    display: none;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 225px;
+    padding: 18px 12px;
+    background: #431315;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    width: 140px;
+    max-height: 90px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 22px;
+}
+
+.sidebar button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background: transparent;
+    text-align: left;
+    margin-bottom: 4px;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+    background: #431315;
+}
+
+.sidebar .section-label {
+    font-size: 11px;
+    color: #edcaca;
+    padding: 18px 10px 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sidebar .logout {
+    margin-top: auto;
+    background: #431315;
+    text-align: center;
+    border: 1px solid #ffffff55;
+}
+
+
+
+.main {
+    margin-left: 225px;
+    min-height: 100vh;
+}
+
+.topbar {
+    background: white;
+    min-height: 85px;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    box-shadow: 0 2px 8px #0000000d;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.topbar h1 {
+    font-size: 23px;
+    color: #800000;
+    margin: 0 0 5px;
+}
+
+.topbar p {
+    margin: 0;
+    font-size: 13px;
+    color: #777;
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.notification {
+    position: relative;
+}
+
+.notification button {
+    border: none;
+    background: #f7eeee;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    font-size: 19px;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -4px;
+    background: #a00000;
+    color: white;
+    border-radius: 50%;
+    font-size: 10px;
+    padding: 4px 6px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: #431315;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.profile-role {
+    font-size: 12px;
+    color: #777;
+    margin-top: 4px;
+}
+
+
+
+.content {
+    padding: 25px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.card, .panel {
+    background: white;
+    padding: 22px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #00000008;
+    margin-bottom: 20px;
+}
+
+.card {
+    border-left: 4px solid #900000;
+}
+
+.card h3 {
+    color: #777;
+    font-size: 14px;
+}
+
+.card h2 {
+    color: #900000;
+}
+
+.panel h2 {
+    color: #800000;
+    margin-top: 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 20px;
+}
+
+.grid label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.grid input, .grid select {
+    width: 100%;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 650px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background: #431315;
+    color: white;
+}
+
+.action {
+    background: #431315;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin: 2px;
+}
+
+.notice {
+    color: #431315;
+    margin-top: 12px;
+}
+
+.notification-list {
+    margin-top: 15px;
+    padding: 12px;
+    background: #fff5f5;
+    border-radius: 5px;
+}
+
+@media(max-width: 800px) {
+    .sidebar {
+        width: 170px;
+    }
+
+    .main {
+        margin-left: 170px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 15px;
+    }
+
+    .content {
+        padding: 12px;
+    }
+
+    .profile-name {
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 600px) {
+    .auth-box {
+        flex-direction: column;
+    }
+
+    .logo-side, .form-side {
+        width: 100%;
+    }
+
+    .logo {
+        max-width: 150px;
+    }
+
+    .sidebar {
+        width: 135px;
+        padding: 8px 5px;
+    }
+
+    .sidebar button {
+        padding: 9px 5px;
+        font-size: 11px;
+    }
+
+    .sidebar-logo {
+        width: 100px;
+    }
+
+    .main {
+        margin-left: 135px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-details {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+
+<div id="loginPage" class="auth-page">
+    <div class="auth-box">
+
+        <div class="logo-side">
+            <img src="savora(2).jpg.png" class="logo" alt="Savora Logo">
+        </div>
+
+        <div class="form-side">
+            <h2>Login</h2>
+            <p>Welcome back! Please log in.</p>
+
+            <form onsubmit="login(event)">
+                <label>Username</label>
+                <input id="loginUsername" placeholder="Enter username">
+
+                <label>Password</label>
+                <input id="loginPassword" type="password" placeholder="Enter password">
+
+                <label>Position</label>
+                <select id="loginRole">
+                    <option value="Cashier">Cashier</option>
+                    <option value="Manager">Manager</option>
+                </select>
+
+                <button class="primary" style="width:100%" type="submit">Login</button>
+            </form>
+
+            <button class="link" onclick="showAuth('registerPage')">Don’t have an account yet? Create an Account</button>
+            <button class="link" onclick="showAuth('forgotPage')">Forgot Password?</button>
+        </div>
+
+    </div>
+</div>
+
+<div id="registerPage" class="auth-page">
+    <div class="auth-box">
+
+        <div class="logo-side">
+            <img src="savora(2).jpg.png" class="logo" alt="Savora Logo">
+            <h1>Join Savora</h1>
+            <p>Create your account to get started.</p>
+        </div>
+
+        <div class="form-side">
+            <h2>Create an account</h2>
+            <p>Get Started with The Savora</p>
+
+            <form onsubmit="registerAccount(event)">
+                <label>Full Name:</label>
+                <input id="registerName" required>
+
+                <label>Email:</label>
+                <input id="Email" required>
+
+                <label>Password:</label>
+                <input id="registerPassword" type="password" required>
+
+                <button class="primary" style="width:100%" type="submit">Register</button>
+            </form>
+
+            <p id="registerMessage" class="notice"></p>
+            <button class="link" onclick="showAuth('loginPage')">Back to Login</button>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="forgotPage" class="auth-page">
+    <div class="auth-box">
+
+        <div class="logo-side">
+            <img src="savora(2).jpg.png" class="logo" alt="Savora Logo">
+            <h1>Forgot Password?</h1>
+            <p>Recover access to your account.</p>
+        </div>
+
+        <div class="form-side">
+            <h2>Reset Password</h2>
+
+            <form onsubmit="resetPassword(event)">
+                <label>Username</label>
+                <input id="forgotUsername" required>
+
+                <label>New Password</label>
+                <input id="newPassword" type="password" required>
+
+                <button class="primary" style="width:100%" type="submit">Reset Password</button>
+            </form>
+
+            <p id="forgotMessage" class="notice"></p>
+            <button class="link" onclick="showAuth('loginPage')">Back to Login</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div id="app">
+
+    <aside class="sidebar">
+        <img src="savora(2).jpg.png" class="sidebar-logo" alt="Savora Logo">
+
+        <div id="sidebarLinks"></div>
+
+        <button class="logout" onclick="logout()">↪ Logout</button>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h1 id="pageTitle">Home</h1>
+                <p>Welcome to Savora Restaurant Management System</p>
+            </div>
+
+            <div class="top-actions">
+
+                <div class="notification">
+                    <button onclick="toggleNotifications()" title="Notifications">♧</button>
+                    <span id="notificationCount" class="notification-count">0</span>
+                </div>
+
+                <div class="profile">
+                    <div class="avatar" id="profileAvatar">U</div>
+
+                    <div class="profile-details">
+                        <div class="profile-name" id="profileName">User</div>
+                        <div class="profile-role" id="profileRole">Cashier</div>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+
+        <div class="content">
+
+            <section id="notifications" class="page">
+                <div class="panel">
+                    <h2>Notifications</h2>
+                    <p id="notificationMessage">You have no new notifications.</p>
+                    <button class="action" onclick="showPage('home')">Back to Home</button>
+                </div>
+            </section>
+
+            <section id="home" class="page active">
+                <h2>Overview</h2>
+
+                <div class="summary">
+                    <div class="card">
+                        <h3>Total Orders</h3>
+                        <h2 id="totalOrders">0</h2>
+                    </div>
+
+                    <div class="card">
+                        <h3>Total Customers</h3>
+                        <h2 id="totalCustomers">0</h2>
+                    </div>
+
+                    <div class="card">
+                        <h3>Completed Orders</h3>
+                        <h2 id="completedOrders">0</h2>
+                    </div>
+
+                    <div class="card">
+                        <h3>Total Sales</h3>
+                        <h2 id="totalSales">₱0.00</h2>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h2>Welcome to Savora</h2>
+                    <p>Use the sidebar to access your work pages.</p>
+                </div>
+            </section>
+
+
+            <section id="pos" class="page">
+                <div class="panel">
+                    <h2>Point of Sale (POS)</h2>
+
+                    <form onsubmit="addOrder(event)">
+                        <div class="grid">
+                            <div>
+                                <label>Customer Name</label>
+                                <input id="customerName" required>
+                            </div>
+
+                            <div>
+                                <label>Contact Number</label>
+                                <input id="customerPhone" required>
+                            </div>
+
+                            <div>
+                                <label>Food</label>
+                                <select id="food" required>
+                                    <option value="">Select Food</option>
+                                    <option value="Chicken Adobo" data-price="150">Chicken Adobo - ₱150</option>
+                                    <option value="Beef Burger" data-price="120">Beef Burger - ₱120</option>
+                                    <option value="Spaghetti" data-price="100">Spaghetti - ₱100</option>
+                                    <option value="Fried Chicken" data-price="130">Fried Chicken - ₱130</option>
+                                    <option value="Pizza" data-price="250">Pizza - ₱250</option>
+                                    <option value="French Fries" data-price="80">French Fries - ₱80</option>
+                                    <option value="Iced Tea" data-price="40">Iced Tea - ₱40</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>Quantity</label>
+                                <input id="quantity" type="number" min="1" value="1" required>
+                            </div>
+
+                            <div>
+                                <label>Table</label>
+                                <select id="tableNumber">
+                                    <option>Takeout</option>
+                                    <option>Table 1</option>
+                                    <option>Table 2</option>
+                                    <option>Table 3</option>
+                                    <option>Table 4</option>
+                                    <option>Table 5</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>Payment Method</label>
+                                <select id="payment">
+                                    <option>Cash</option>
+                                    <option>GCash</option>
+                                    <option>Card</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="primary" type="submit">Save Order</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="orders" class="page">
+                <div class="panel">
+                    <h2>Order Records</h2>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Customer</th>
+                                    <th>Contact</th>
+                                    <th>Food</th>
+                                    <th>Qty</th>
+                                    <th>Table</th>
+                                    <th>Total</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tables" class="page">
+                <div class="panel">
+                    <h2>Restaurant Tables</h2>
+                    <div class="summary">
+                        <div class="card"><h3>Table 1</h3><h2 id="table1">Available</h2></div>
+                        <div class="card"><h3>Table 2</h3><h2 id="table2">Available</h2></div>
+                        <div class="card"><h3>Table 3</h3><h2 id="table3">Available</h2></div>
+                        <div class="card"><h3>Table 4</h3><h2 id="table4">Available</h2></div>
+                        <div class="card"><h3>Table 5</h3><h2 id="table5">Available</h2></div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="menu" class="page">
+                <div class="panel">
+                    <h2>Food Menu</h2>
+                    <table>
+                        <thead><tr><th>Food</th><th>Price</th></tr></thead>
+                        <tbody>
+                            <tr><td>Chicken Adobo</td><td>₱150</td></tr>
+                            <tr><td>Beef Burger</td><td>₱120</td></tr>
+                            <tr><td>Spaghetti</td><td>₱100</td></tr>
+                            <tr><td>Fried Chicken</td><td>₱130</td></tr>
+                            <tr><td>Pizza</td><td>₱250</td></tr>
+                            <tr><td>French Fries</td><td>₱80</td></tr>
+                            <tr><td>Iced Tea</td><td>₱40</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+
+            <section id="customers" class="page">
+                <div class="panel">
+                    <h2>Customers</h2>
+                    <table>
+                        <thead>
+                            <tr><th>Name</th><th>Contact</th><th>Action</th></tr>
+                        </thead>
+                        <tbody id="customersTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="inventory" class="page">
+                <div class="panel">
+                    <h2>Inventory</h2>
+
+                    <form onsubmit="addInventory(event)">
+                        <label>Item Name</label>
+                        <input id="itemName" required>
+
+                        <label>Quantity</label>
+                        <input id="itemQuantity" type="number" min="0" required>
+
+                        <button class="primary" type="submit">Add Inventory Item</button>
+                    </form>
+
+                    <br>
+                    <table>
+                        <thead><tr><th>Item</th><th>Quantity</th><th>Action</th></tr></thead>
+                        <tbody id="inventoryTable"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="report" class="page">
+                <div class="panel">
+                    <h2>Reports</h2>
+                    <p>Total Orders: <strong id="reportOrders">0</strong></p><br>
+                    <p>Completed Orders: <strong id="reportCompleted">0</strong></p><br>
+                    <p>Total Sales: <strong id="reportSales">₱0.00</strong></p>
+                </div>
+            </section>
+
+
+            <section id="user" class="page">
+                <div class="panel">
+                    <h2>User Profile</h2>
+
+                    <label>Name</label>
+                    <input id="userNameInput">
+
+                    <label>Position</label>
+                    <input id="userRoleInput" disabled>
+
+                    <button class="primary" onclick="saveProfile()">Save Profile</button>
+
+                    <p id="profileMessage" class="notice"></p>
+                </div>
+            </section>
+
+
+            <section id="settings" class="page">
+                <div class="panel">
+                    <h2>Settings</h2>
+                    <p>Account: <strong id="settingsName"></strong></p><br>
+                    <p>Position: <strong id="settingsRole"></strong></p><br>
+                    <button class="action" onclick="logout()">Log Out</button>
+                </div>
+            </section>
+
+
+            <section id="help" class="page">
+                <div class="panel">
+                    <h2>Help & Support</h2>
+                    <p>Welcome to Savora Support.</p><br>
+                    <p>For assistance with orders, tables, or the menu, contact your restaurant manager.</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+
+
+<script>
+
+var orders = JSON.parse(localStorage.getItem("savora_orders_db")) || [];
+var customers = JSON.parse(localStorage.getItem("savora_customers_db")) || [];
+var inventory = JSON.parse(localStorage.getItem("savora_inventory_db")) || [];
+var accounts = JSON.parse(localStorage.getItem("savora_accounts_db")) || [];
+
+var currentRole = "Cashier";
+var currentName = "Jane Hop";
+
+function showAuth(page) {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("registerPage").style.display = "none";
+    document.getElementById("forgotPage").style.display = "none";
+    document.getElementById("app").style.display = "none";
+
+    document.getElementById(page).style.display = "flex";
+}
+
+
+function login(event) {
+    event.preventDefault();
+
+    currentRole = document.getElementById("loginRole").value;
+    currentName = document.getElementById("loginUsername").value || currentRole + " User";
+
+    openDashboard();
+}
+
+
+function openDashboard() {
+    showAuth("loginPage");
+
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("app").style.display = "block";
+
+    document.getElementById("profileName").innerHTML = currentName;
+    document.getElementById("profileRole").innerHTML = currentRole;
+    document.getElementById("profileAvatar").innerHTML = currentName.charAt(0).toUpperCase();
+
+    document.getElementById("userNameInput").value = currentName;
+    document.getElementById("userRoleInput").value = currentRole;
+
+    document.getElementById("settingsName").innerHTML = currentName;
+    document.getElementById("settingsRole").innerHTML = currentRole;
+
+    createSidebar();
+    showPage("home");
+}
+
+
+function createSidebar() {
+    var links = "";
+
+    if (currentRole == "Cashier") {
+        links += "<button onclick=\"showPage('home')\">⌂ Home</button>";
+        links += "<button onclick=\"showPage('pos')\">▣ POS</button>";
+        links += "<button onclick=\"showPage('orders')\">☷ Orders</button>";
+        links += "<button onclick=\"showPage('tables')\">▦ Tables</button>";
+        links += "<button onclick=\"showPage('menu')\">☰ Menu</button>";
+        links += "<button onclick=\"showPage('customers')\">♙ Customers</button>";
+    } else {
+        links += "<button onclick=\"showPage('home')\">⌂ Home</button>";
+        links += "<button onclick=\"showPage('menu')\">☰ Menu</button>";
+        links += "<button onclick=\"showPage('inventory')\">▤ Inventory</button>";
+        links += "<button onclick=\"showPage('report')\">▥ Report</button>";
+        links += "<button onclick=\"showPage('tables')\">▦ Tables</button>";
+        links += "<button onclick=\"showPage('user')\">♙ User</button>";
+    }
+
+    links += "<div class='section-label'>Preferences</div>";
+    links += "<button onclick=\"showPage('settings')\">⚙ Settings</button>";
+    links += "<button onclick=\"showPage('help')\">? Help &amp; Support</button>";
+
+    document.getElementById("sidebarLinks").innerHTML = links;
+}
+
+
+function registerAccount(event) {
+    event.preventDefault();
+
+    var account = {
+        name: document.getElementById("registerName").value,
+        username: document.getElementById("Email").value,
+        password: document.getElementById("registerPassword").value
+    };
+
+    accounts.push(account);
+    localStorage.setItem("savora_accounts_db", JSON.stringify(accounts));
+
+    document.getElementById("registerMessage").innerHTML =
+        "Registration successful! You can now log in.";
+
+    document.getElementById("registerName").value = "";
+    document.getElementById("Email").value = "";
+    document.getElementById("registerPassword").value = "";
+}
+
+function resetPassword(event) {
+    event.preventDefault();
+
+    var username = document.getElementById("forgotUsername").value;
+    var password = document.getElementById("newPassword").value;
+    var found = false;
+
+    for (var i = 0; i < accounts.length; i++) {
+        if (accounts[i].username == username) {
+            accounts[i].password = password;
+            found = true;
+            break;
+        }
+    }
+
+    if (found) {
+        localStorage.setItem("savora_accounts_db", JSON.stringify(accounts));
+        document.getElementById("forgotMessage").innerHTML =
+            "Password changed successfully.";
+    } else {
+        document.getElementById("forgotMessage").innerHTML =
+            "Username not found.";
+    }
+}
+
+function showPage(page) {
+    var pages = document.querySelectorAll(".page");
+
+    for (var i = 0; i < pages.length; i++) {
+        pages[i].classList.remove("active");
+    }
+
+    document.getElementById(page).classList.add("active");
+
+    var titles = {
+        home: "Home",
+        pos: "Point of Sale",
+        orders: "Orders",
+        tables: "Tables",
+        menu: "Menu",
+        customers: "Customers",
+        inventory: "Inventory",
+        report: "Report",
+        user: "User",
+        settings: "Settings",
+        help: "Help & Support",
+        notifications: "Notifications"
+    };
+
+    document.getElementById("pageTitle").innerHTML = titles[page] || page;
+
+    displayOrders();
+    displayCustomers();
+    displayInventory();
+    updateDashboard();
+    updateTables();
+}
+
+function addOrder(event) {
+    event.preventDefault();
+
+    var foodSelect = document.getElementById("food");
+    var selectedFood = foodSelect.options[foodSelect.selectedIndex];
+    var price = Number(selectedFood.getAttribute("data-price"));
+    var quantity = Number(document.getElementById("quantity").value);
+
+    var order = {
+        id: Date.now(),
+        customerName: document.getElementById("customerName").value,
+        customerPhone: document.getElementById("customerPhone").value,
+        food: foodSelect.value,
+        quantity: quantity,
+        table: document.getElementById("tableNumber").value,
+        total: price * quantity,
+        payment: document.getElementById("payment").value,
+        status: "Pending"
+    };
+
+    orders.push(order);
+    localStorage.setItem("savora_orders_db", JSON.stringify(orders));
+
+    var foundCustomer = false;
+
+    for (var i = 0; i < customers.length; i++) {
+        if (customers[i].phone == order.customerPhone) {
+            foundCustomer = true;
+            break;
+        }
+    }
+
+    if (!foundCustomer) {
+        customers.push({
+            name: order.customerName,
+            phone: order.customerPhone
+        });
+
+        localStorage.setItem("savora_customers_db", JSON.stringify(customers));
+    }
+
+    alert("Order saved successfully!");
+
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerPhone").value = "";
+    document.getElementById("food").value = "";
+    document.getElementById("quantity").value = "1";
+
+    showPage("orders");
+}
+
+function displayOrders() {
+    var table = "";
+
+    for (var i = 0; i < orders.length; i++) {
+        table += "<tr>";
+        table += "<td>" + orders[i].id + "</td>";
+        table += "<td>" + orders[i].customerName + "</td>";
+        table += "<td>" + orders[i].customerPhone + "</td>";
+        table += "<td>" + orders[i].food + "</td>";
+        table += "<td>" + orders[i].quantity + "</td>";
+        table += "<td>" + orders[i].table + "</td>";
+        table += "<td>₱" + orders[i].total.toFixed(2) + "</td>";
+        table += "<td>" + orders[i].payment + "</td>";
+
+        table += "<td><select onchange='updateOrder(" + i + ", this.value)'>";
+
+        var statuses = ["Pending", "Preparing", "Completed", "Cancelled"];
+
+        for (var j = 0; j < statuses.length; j++) {
+            var selected = orders[i].status == statuses[j] ? "selected" : "";
+            table += "<option " + selected + ">" + statuses[j] + "</option>";
+        }
+
+        table += "</select></td>";
+
+        table += "<td><button class='action' onclick='deleteOrder(" + i + ")'>Delete</button></td>";
+        table += "</tr>";
+    }
+
+    if (orders.length == 0) {
+        table = "<tr><td colspan='10'>No orders yet.</td></tr>";
+    }
+
+    document.getElementById("ordersTable").innerHTML = table;
+}
+
+
+
+function updateOrder(index, status) {
+    orders[index].status = status;
+
+    localStorage.setItem("savora_orders_db", JSON.stringify(orders));
+
+    updateDashboard();
+    updateTables();
+}
+
+
+
+function deleteOrder(index) {
+    if (confirm("Are you sure you want to delete this order?")) {
+        orders.splice(index, 1);
+
+        localStorage.setItem("savora_orders_db", JSON.stringify(orders));
+
+        displayOrders();
+        updateDashboard();
+        updateTables();
+
+        alert("Order deleted successfully.");
+    }
+}
+
+
+function displayCustomers() {
+    var table = "";
+
+    for (var i = 0; i < customers.length; i++) {
+        table += "<tr>";
+        table += "<td>" + customers[i].name + "</td>";
+        table += "<td>" + customers[i].phone + "</td>";
+        table += "<td><button class='action' onclick='deleteCustomer(" + i + ")'>Delete</button></td>";
+        table += "</tr>";
+    }
+
+    if (customers.length == 0) {
+        table = "<tr><td colspan='3'>No customers yet.</td></tr>";
+    }
+
+    document.getElementById("customersTable").innerHTML = table;
+}
+
+function deleteCustomer(index) {
+    if (confirm("Delete this customer?")) {
+        customers.splice(index, 1);
+
+        localStorage.setItem("savora_customers_db", JSON.stringify(customers));
+
+        displayCustomers();
+        updateDashboard();
+    }
+}
+
+
+function addInventory(event) {
+    event.preventDefault();
+
+    inventory.push({
+        name: document.getElementById("itemName").value,
+        quantity: Number(document.getElementById("itemQuantity").value)
+    });
+
+    localStorage.setItem("savora_inventory_db", JSON.stringify(inventory));
+
+    document.getElementById("itemName").value = "";
+    document.getElementById("itemQuantity").value = "";
+
+    displayInventory();
+}
+
+function displayInventory() {
+    var table = "";
+
+    for (var i = 0; i < inventory.length; i++) {
+        table += "<tr>";
+        table += "<td>" + inventory[i].name + "</td>";
+        table += "<td>" + inventory[i].quantity + "</td>";
+        table += "<td><button class='action' onclick='deleteInventory(" + i + ")'>Delete</button></td>";
+        table += "</tr>";
+    }
+
+    if (inventory.length == 0) {
+        table = "<tr><td colspan='3'>No inventory items yet.</td></tr>";
+    }
+
+    document.getElementById("inventoryTable").innerHTML = table;
+}
+
+function deleteInventory(index) {
+    if (confirm("Delete this inventory item?")) {
+        inventory.splice(index, 1);
+        localStorage.setItem("savora_inventory_db", JSON.stringify(inventory));
+        displayInventory();
+    }
+}
+
+
+function updateDashboard() {
+    var completed = 0;
+    var sales = 0;
+
+    for (var i = 0; i < orders.length; i++) {
+        if (orders[i].status == "Completed") {
+            completed++;
+            sales += orders[i].total;
+        }
+    }
+
+    document.getElementById("totalOrders").innerHTML = orders.length;
+    document.getElementById("totalCustomers").innerHTML = customers.length;
+    document.getElementById("completedOrders").innerHTML = completed;
+    document.getElementById("totalSales").innerHTML = "₱" + sales.toFixed(2);
+
+    document.getElementById("reportOrders").innerHTML = orders.length;
+    document.getElementById("reportCompleted").innerHTML = completed;
+    document.getElementById("reportSales").innerHTML = "₱" + sales.toFixed(2);
+
+    var pending = 0;
+
+    for (var j = 0; j < orders.length; j++) {
+        if (orders[j].status == "Pending") {
+            pending++;
+        }
+    }
+
+    document.getElementById("notificationCount").innerHTML = pending;
+    document.getElementById("notificationMessage").innerHTML =
+        pending + " pending order(s) need attention.";
+}
+
+function updateTables() {
+    for (var n = 1; n <= 5; n++) {
+        var occupied = false;
+
+        for (var i = 0; i < orders.length; i++) {
+            if (
+                orders[i].table == "Table " + n &&
+                orders[i].status != "Completed" &&
+                orders[i].status != "Cancelled"
+            ) {
+                occupied = true;
+                break;
+            }
+        }
+
+        document.getElementById("table" + n).innerHTML =
+            occupied ? "Occupied" : "Available";
+    }
+}
+
+
+function toggleNotifications() {
+    showPage("notifications");
+}
+
+
+function saveProfile() {
+    currentName = document.getElementById("userNameInput").value || currentRole + " User";
+
+    document.getElementById("profileName").innerHTML = currentName;
+    document.getElementById("profileAvatar").innerHTML = currentName.charAt(0).toUpperCase();
+    document.getElementById("settingsName").innerHTML = currentName;
+
+    document.getElementById("profileMessage").innerHTML =
+        "Profile updated successfully.";
+}
+
+
+function logout() {
+    document.getElementById("app").style.display = "none";
+
+    document.getElementById("loginUsername").value = "";
+    document.getElementById("loginPassword").value = "";
+
+    showAuth("loginPage");
+}
+
+
+showAuth("loginPage");
+
+</script>
+</body>
+</html>
